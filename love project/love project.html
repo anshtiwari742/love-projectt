@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For You ❤️</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial;
+      background: linear-gradient(to right, pink, lightpink);
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 50px;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      margin: 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #yesBtn {
+      background-color: red;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: gray;
+      color: white;
+      position: absolute;
+    }
+
+    #message {
+      font-size: 20px;
+      color: darkred;
+      margin-top: 20px;
+    }
+
+    img {
+      width: 300px;
+      border-radius: 15px;
+      margin: 10px;
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 20px;
+      animation: float 3s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-500px); opacity: 0; }
+    }
+
+    .glow {
+      color: white;
+      text-shadow: 0 0 10px red, 0 0 20px pink, 0 0 30px red;
+      animation: glowAnim 1.5s infinite alternate;
+    }
+
+    @keyframes glowAnim {
+      from { text-shadow: 0 0 10px red; }
+      to { text-shadow: 0 0 25px pink; }
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Do you love me? ❤️</h1>
+
+<button id="yesBtn" onclick="yesClicked()">Yes 💖</button>
+<button id="noBtn" onclick="noClicked()">No 😢</button>
+
+<p id="message"></p>
+
+<script>
+  let noCount = 0;
+
+  function yesClicked() {
+    document.body.innerHTML = `
+      <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+      </audio>
+
+      <h1 class="glow">Will you marry me? 💍❤️</h1>
+      <h2 class="glow">❤️ Stuti ❤️</h2>
+      <p id="typing"></p>
+      <div id="photos"></div>
+    `;
+
+    let music = document.getElementById("bgMusic");
+    music.play();
+
+    if (navigator.vibrate) {
+      navigator.vibrate([200, 100, 200]);
+    }
+
+    createHearts();
+    createFireworks();
+
+    typeText("I want to spend my whole life with you 🥺❤️");
+
+    let images = ["photo1.jpg", "photo2.jpg", "photo3.jpg"];
+    let i = 0;
+
+    setInterval(() => {
+      if (i < images.length) {
+        let img = document.createElement("img");
+        img.src = images[i];
+        document.getElementById("photos").appendChild(img);
+        i++;
+      }
+    }, 1500);
+  }
+
+  function noClicked() {
+    noCount++;
+
+    if (noCount === 1) {
+      document.getElementById("message").innerText =
+        "Please choose YES baby, I love you ❤️😭";
+    } else if (noCount === 2) {
+      document.getElementById("message").innerText =
+        "Pleaseeeeeeeeeeeeeeeee 😭😭😭";
+    } else {
+      document.getElementById("message").innerText =
+        "Itna bhi kya soch rahi ho 😭❤️";
+    }
+
+    moveButton();
+  }
+
+  function moveButton() {
+    let btn = document.getElementById("noBtn");
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }
+
+  function typeText(text) {
+    let i = 0;
+    function typing() {
+      if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+      }
+    }
+    typing();
+  }
+
+  function createHearts() {
+    setInterval(() => {
+      let heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = window.innerHeight + "px";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 3000);
+    }, 300);
+  }
+
+  function createFireworks() {
+    setInterval(() => {
+      let fire = document.createElement("div");
+      fire.innerHTML = "🎆";
+      fire.style.position = "absolute";
+      fire.style.left = Math.random() * window.innerWidth + "px";
+      fire.style.top = Math.random() * window.innerHeight + "px";
+      fire.style.fontSize = "30px";
+
+      document.body.appendChild(fire);
+
+      setTimeout(() => {
+        fire.remove();
+      }, 1000);
+    }, 300);
+  }
+</script>
+
+</body>
+</html>
